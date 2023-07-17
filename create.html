@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Input Fields</title>
+</head>
+<body>
+    <h1>Create Input Fields</h1>
+
+    <form id="myForm">
+        <label for="number">Number of Questions:</label>
+        <input type="number" id="number" min="1" max="10">
+        <button type="button" onclick="createFields()">Generate Fields</button>
+    </form>
+
+    <div id="inputFieldsContainer"></div>
+
+    <button type="submit" form="myForm" onclick="submitForm()">Submit</button>
+
+    <script>
+        function createFields() {
+            var number = document.getElementById("number").value;
+            var container = document.getElementById("inputFieldsContainer");
+            container.innerHTML = ""; // Clear previous fields
+
+            for (var i = 1; i <= number; i++) {
+                var questionInput = document.createElement("input");
+                questionInput.type = "text";
+                questionInput.placeholder = "Question";
+                questionInput.name = "question" + i;
+                questionInput.id = "question" + i;
+                container.appendChild(questionInput);
+                container.appendChild(document.createElement("br"));
+
+                for (var j = 1; j <= 4; j++) {
+                    var optionInput = document.createElement("input");
+                    optionInput.type = "text";
+                    optionInput.placeholder = "Option " + j;
+                    optionInput.name = "option" + j + "Question" + i;
+                    optionInput.id = "option" + j + "Question" + i;
+                    container.appendChild(optionInput);
+                    container.appendChild(document.createElement("br"));
+                }
+
+                var answerInput = document.createElement("input");
+                answerInput.type = "text";
+                answerInput.placeholder = "Answer";
+                answerInput.name = "answer" + i;
+                answerInput.id = "answer" + i;
+                container.appendChild(answerInput);
+                container.appendChild(document.createElement("br"));
+                container.appendChild(document.createElement("br"));
+            }
+        }
+
+        function submitForm(e) {
+            e.preventDefault()
+            var form = document.getElementById("myForm");
+            var formData = new FormData(form);
+            var formEntries = Array.from(formData.entries());
+
+            console.log("Form Data:");
+            for (var entry of formEntries) {
+                console.log(entry[0] + ": " + entry[1]);
+            }
+
+            // You can perform additional actions with the form data here
+
+            // Uncomment the line below if you want to prevent the form from actually submitting
+            // event.preventDefault();
+        }
+    </script>
+</body>
+</html>
